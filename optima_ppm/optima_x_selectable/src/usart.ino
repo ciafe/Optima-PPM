@@ -1,8 +1,16 @@
+/*
+* Copyright (c) 2012 Scott Driessens
+* Licensed under the MIT License
+*/
+
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-#include <core/usart.h>
+#include "usart.h"
 
+#if defined(DEBUG_PRINT)
+/* If DEBUG_PRINT UART is used to print characters... */
+#else
 volatile struct cqueue * usart_rx;
 
 volatile struct cqueue usart_rx_s;
@@ -69,6 +77,7 @@ uint16_t q_find(volatile struct cqueue *q, uint8_t val)
 	return 0;
 }
 
+
 uint16_t q_used(volatile struct cqueue *q)
 {
 	uint16_t idx = q->back;
@@ -76,3 +85,4 @@ uint16_t q_used(volatile struct cqueue *q)
 		idx += USART_BUFF;
 	return (idx - q->front);
 }
+#endif

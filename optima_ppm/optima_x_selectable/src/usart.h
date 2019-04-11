@@ -1,12 +1,18 @@
+/*
+* Copyright (c) 2012 Scott Driessens
+* Licensed under the MIT License
+*/
+
 #ifndef __USART_H
 #define __USART_H
 
 #include <stdint.h>
 
-#define BAUD 115200L
+#define CLOCK 8000000UL
+#define BAUD  115200L
 #define MYUBR (CLOCK/16L/BAUD-1)
 
-#define USART_BUFF              256
+#define USART_BUFF      128
 
 struct cqueue {
   uint16_t front;
