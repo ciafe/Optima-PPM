@@ -1,4 +1,6 @@
-# Hitec Optima PPM
+# Hitec Optima PPM/SBUS
+
+** COMMING SOON**
 
 **Only attempt this modification if you know what you are doing and understand the risks.**
 
