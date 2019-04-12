@@ -49,9 +49,10 @@ void sbusTransmitPacket(uint16_t channels[], bool isSignalLoss, bool isFailsafe)
         output[i] = map16b(channels[i], RC_CHANNEL_MIN, RC_CHANNEL_MAX, SBUS_MIN_OFFSET, SBUS_MAX_OFFSET);
     }
     /* Unused channels, set to minim value */
+     /* Removed for code optmization... Fix value SBUS_MIN_OFFSET for unused channels are set below in the sbusPacket[x]
     for (uint8_t i = OPTIMA_NUM_CHANNELS; i < SBUS_CHANNEL_NUMBER; i++) {
         output[i] = SBUS_MIN_OFFSET;
-    }
+    }*/
     
 
     uint8_t stateByte = 0x00;
@@ -75,7 +76,9 @@ void sbusTransmitPacket(uint16_t channels[], bool isSignalLoss, bool isFailsafe)
     sbusPacket[10] = (uint8_t) ((output[6] & 0x07FF)>>6 | (output[7] & 0x07FF)<<5);
     sbusPacket[11] = (uint8_t) ((output[7] & 0x07FF)>>3);
     sbusPacket[12] = (uint8_t) ((output[8] & 0x07FF));
-    sbusPacket[13] = (uint8_t) ((output[8] & 0x07FF)>>8 | (output[9] & 0x07FF)<<3);
+    sbusPacket[13] = (uint8_t) ((output[8] & 0x07FF)>>8 | 0x68);
+
+    /* Removed for code optmization... code fix SBUS_MIN_OFFSET values for all unused channels 
     sbusPacket[14] = (uint8_t) ((output[9]  & 0x07FF)>>5 | (output[10] & 0x07FF)<<6);  
     sbusPacket[15] = (uint8_t) ((output[10] & 0x07FF)>>2);
     sbusPacket[16] = (uint8_t) ((output[10] & 0x07FF)>>10 | (output[11] & 0x07FF)<<1);
@@ -85,6 +88,16 @@ void sbusTransmitPacket(uint16_t channels[], bool isSignalLoss, bool isFailsafe)
     sbusPacket[20] = (uint8_t) ((output[13] & 0x07FF)>>9 | (output[14] & 0x07FF)<<2);
     sbusPacket[21] = (uint8_t) ((output[14] & 0x07FF)>>6 | (output[15] & 0x07FF)<<5);
     sbusPacket[22] = (uint8_t) ((output[15] & 0x07FF)>>3);
+    */
+    sbusPacket[14] = (uint8_t)0x45;
+    sbusPacket[15] = (uint8_t)0x2B;
+    sbusPacket[16] = (uint8_t)0x5A;
+    sbusPacket[17] = (uint8_t)0xD1;
+    sbusPacket[18] = (uint8_t)0x8A;
+    sbusPacket[19] = (uint8_t)0x56;
+    sbusPacket[20] = (uint8_t)0xB4;
+    sbusPacket[21] = (uint8_t)0xA2;
+    sbusPacket[22] = (uint8_t)0x15;
     sbusPacket[23] = stateByte;         //Flags byte
     sbusPacket[24] = SBUS_FRAME_FOOTER; //Footer
 
